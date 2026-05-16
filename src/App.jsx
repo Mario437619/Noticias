@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import NavBar from './components/NavBar'
 import NewsCard from './components/NewsCard'
 import HeroSection from './components/HeroSection'
 import Sidebar from './components/Sidebar'
+import FilterBar from './components/FilterBar'
+import Footer from './components/Footer'
 
 const noticias = [
   {
@@ -55,6 +58,12 @@ const noticias = [
 ]
 
 function App() {
+  const [categoriaActiva, setCategoriaActiva] = useState("Todas")
+
+  const noticiasFiltradas = categoriaActiva === "Todas"
+    ? noticias
+    : noticias.filter((n) => n.category === categoriaActiva)
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <NavBar />
@@ -65,9 +74,15 @@ function App() {
 
           {/* Noticias */}
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6">Últimas Noticias</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Últimas Noticias</h2>
+
+            <FilterBar
+              categoriaActiva={categoriaActiva}
+              onCategoriaChange={setCategoriaActiva}
+            />
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {noticias.map((noticia) => (
+              {noticiasFiltradas.map((noticia) => (
                 <NewsCard
                   key={noticia.id}
                   title={noticia.title}
@@ -78,6 +93,10 @@ function App() {
                 />
               ))}
             </div>
+
+            {noticiasFiltradas.length === 0 && (
+              <p className="text-gray-400 text-center py-12">No hay noticias en esta categoría.</p>
+            )}
           </div>
 
           {/* Sidebar */}
@@ -85,6 +104,7 @@ function App() {
 
         </div>
       </main>
+      <Footer />
     </div>
   )
 }
