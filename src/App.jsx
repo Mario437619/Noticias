@@ -1,5 +1,6 @@
 import NavBar from './components/NavBar'
 import NewsCard from './components/NewsCard'
+import HeroSection from './components/HeroSection'
 
 const noticias = [
   {
@@ -32,7 +33,8 @@ function App() {
   return (
     <div className="bg-gray-100 min-h-screen">
       <NavBar />
-      
+      <HeroSection />
+
       <main className="max-w-6xl mx-auto px-6 py-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Últimas Noticias</h2>
         
