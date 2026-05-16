@@ -1,7 +1,19 @@
-function NewsCard({ title, category, description, image, date }) {
+import { useNavigate } from 'react-router-dom'
+
+function NewsCard({ title, category, description, image, date, url }) {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate('/article', {
+      state: { title, category, description, image, date, url }
+    })
+  }
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-      
+    <div
+      onClick={handleClick}
+      className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-1"
+    >
       {/* Imagen */}
       <img
         src={image}
@@ -11,14 +23,14 @@ function NewsCard({ title, category, description, image, date }) {
 
       {/* Contenido */}
       <div className="p-4">
-        
+
         {/* Categoría */}
         <span className="text-xs font-bold text-white bg-red-500 px-2 py-1 rounded-full">
           {category}
         </span>
 
         {/* Título */}
-        <h2 className="text-lg font-bold text-gray-800 mt-2 hover:text-red-500 cursor-pointer">
+        <h2 className="text-lg font-bold text-gray-800 mt-2 hover:text-red-500 transition-colors leading-tight">
           {title}
         </h2>
 
