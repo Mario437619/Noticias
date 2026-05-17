@@ -1,3 +1,4 @@
+import ScrollToTop from './components/ScrollToTop'
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
@@ -65,6 +66,7 @@ function App() {
 
         <Footer modoOscuro={modoOscuro} />
       </div>
+      <ScrollToTop />
     </BrowserRouter>
   )
 }
