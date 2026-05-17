@@ -3,9 +3,11 @@ import NewsCard from '../components/NewsCard'
 import HeroSection from '../components/HeroSection'
 import Sidebar from '../components/Sidebar'
 import FilterBar from '../components/FilterBar'
+import useScrollReveal from '../hooks/useScrollReveal'
 
 function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActiva, modoOscuro }) {
   const [visible, setVisible] = useState(false)
+  useScrollReveal(noticias)
 
   useEffect(() => {
     setVisible(false)
@@ -22,15 +24,17 @@ function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActi
 
           {/* Noticias */}
           <div className="flex-1">
-            <h2 className={`text-2xl font-bold mb-4 ${modoOscuro ? 'text-white' : 'text-gray-800'}`}>
+            <h2 className={`text-2xl font-bold mb-4 reveal ${modoOscuro ? 'text-white' : 'text-gray-800'}`}>
               Últimas Noticias
             </h2>
 
-            <FilterBar
-              categoriaActiva={categoriaActiva}
-              onCategoriaChange={setCategoriaActiva}
-              modoOscuro={modoOscuro}
-            />
+            <div className="reveal">
+              <FilterBar
+                categoriaActiva={categoriaActiva}
+                onCategoriaChange={setCategoriaActiva}
+                modoOscuro={modoOscuro}
+              />
+            </div>
 
             {/* Loading */}
             {cargando && (
@@ -59,9 +63,9 @@ function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActi
                 {noticias.map((noticia, index) => (
                   <div
                     key={noticia.id}
+                    className="reveal"
                     style={{
-                      animation: visible ? `fadeUp 0.5s ease-out ${index * 0.1}s both` : 'none',
-                      opacity: visible ? 1 : 0
+                      transitionDelay: `${index * 0.1}s`
                     }}
                   >
                     <NewsCard
@@ -84,7 +88,9 @@ function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActi
           </div>
 
           {/* Sidebar */}
-          <Sidebar onCategoriaChange={setCategoriaActiva} modoOscuro={modoOscuro} />
+          <div className="reveal">
+            <Sidebar onCategoriaChange={setCategoriaActiva} modoOscuro={modoOscuro} />
+          </div>
 
         </div>
       </main>

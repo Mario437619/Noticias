@@ -29,10 +29,15 @@ function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
 
-      {/* Badge LIVE parpadeante */}
-      <div className="absolute top-6 left-8 flex items-center gap-2"
-        style={{ animation: 'fadeIn 0.8s ease-out both' }}
-      >
+      {/* Objetos flotantes decorativos */}
+      <div className="absolute top-16 right-16 w-24 h-24 rounded-full bg-red-500/10 border border-red-500/20 float-y" />
+      <div className="absolute top-32 right-32 w-12 h-12 rounded-full bg-red-500/20 border border-red-500/30 float-y" style={{ animationDelay: '1s' }} />
+      <div className="absolute top-20 right-64 w-8 h-8 rounded-full bg-white/10 float-y" style={{ animationDelay: '2s' }} />
+      <div className="absolute bottom-32 right-24 w-16 h-16 border-2 border-red-500/30 rotate-slow" style={{ borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }} />
+      <div className="absolute top-40 right-48 w-6 h-6 bg-red-500/30 rotate-slow" style={{ animationDelay: '3s' }} />
+
+      {/* Badge LIVE */}
+      <div className="absolute top-6 left-8 flex items-center gap-2 fade-in">
         <span className="flex h-3 w-3">
           <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
           <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
@@ -64,12 +69,11 @@ function HeroSection() {
           Expertos internacionales reconocen el avance del ecosistema tech mexicano como uno de los más dinámicos de la región.
         </p>
 
-        {/* Botones */}
         <div
           className="flex gap-3 mt-6"
           style={{ animation: 'fadeUp 0.6s ease-out 0.4s both' }}
         >
-          <button className="bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg">
+          <button className="bg-red-500 hover:bg-red-600 text-white font-bold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-red-500/30">
             Leer más →
           </button>
           <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-bold px-6 py-3 rounded-full transition-all duration-300 hover:scale-105 border border-white/20">
@@ -77,7 +81,6 @@ function HeroSection() {
           </button>
         </div>
 
-        {/* Stats */}
         <div
           className="flex gap-6 mt-8"
           style={{ animation: 'fadeUp 0.6s ease-out 0.5s both' }}
