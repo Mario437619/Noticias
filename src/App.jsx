@@ -12,6 +12,7 @@ function App() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
   const [modoOscuro, setModoOscuro] = useState(false)
+  const [busqueda, setBusqueda] = useState("")
 
   useEffect(() => {
     setCargando(true)
@@ -28,6 +29,11 @@ function App() {
       })
   }, [categoriaActiva])
 
+  const noticiasFiltradas = noticias.filter((n) =>
+    n.title.toLowerCase().includes(busqueda.toLowerCase()) ||
+    n.description?.toLowerCase().includes(busqueda.toLowerCase())
+  )
+
   return (
     <BrowserRouter>
       <div className={modoOscuro ? 'bg-gray-950 min-h-screen' : 'bg-gray-100 min-h-screen'}>
@@ -35,6 +41,8 @@ function App() {
           onCategoriaChange={setCategoriaActiva}
           modoOscuro={modoOscuro}
           toggleModo={() => setModoOscuro(!modoOscuro)}
+          busqueda={busqueda}
+          setBusqueda={setBusqueda}
         />
 
         <Routes>
@@ -42,12 +50,13 @@ function App() {
             path="/"
             element={
               <HomePage
-                noticias={noticias}
+                noticias={noticiasFiltradas}
                 cargando={cargando}
                 error={error}
                 categoriaActiva={categoriaActiva}
                 setCategoriaActiva={setCategoriaActiva}
                 modoOscuro={modoOscuro}
+                busqueda={busqueda}
               />
             }
           />
