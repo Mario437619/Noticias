@@ -1,4 +1,3 @@
-import ScrollToTop from './components/ScrollToTop'
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
@@ -6,6 +5,8 @@ import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
 import ArticlePage from './pages/ArticlePage'
 import NotFoundPage from './pages/NotFoundPage'
+import StatsPage from './pages/StatsPage'
+import ScrollToTop from './components/ScrollToTop'
 import { fetchNoticias } from './services/newsService'
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
             }
           />
           <Route path="/article" element={<ArticlePage modoOscuro={modoOscuro} />} />
+          <Route path="/stats" element={<StatsPage modoOscuro={modoOscuro} />} />
           <Route path="*" element={<NotFoundPage modoOscuro={modoOscuro} />} />
         </Routes>
 
