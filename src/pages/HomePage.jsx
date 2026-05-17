@@ -1,9 +1,18 @@
+import { useEffect, useState } from 'react'
 import NewsCard from '../components/NewsCard'
 import HeroSection from '../components/HeroSection'
 import Sidebar from '../components/Sidebar'
 import FilterBar from '../components/FilterBar'
 
-function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActiva }) {
+function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActiva, modoOscuro }) {
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    setVisible(false)
+    const timer = setTimeout(() => setVisible(true), 100)
+    return () => clearTimeout(timer)
+  }, [categoriaActiva, noticias])
+
   return (
     <>
       <HeroSection />
@@ -13,23 +22,26 @@ function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActi
 
           {/* Noticias */}
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Últimas Noticias</h2>
+            <h2 className={`text-2xl font-bold mb-4 ${modoOscuro ? 'text-white' : 'text-gray-800'}`}>
+              Últimas Noticias
+            </h2>
 
             <FilterBar
               categoriaActiva={categoriaActiva}
               onCategoriaChange={setCategoriaActiva}
+              modoOscuro={modoOscuro}
             />
 
             {/* Loading */}
             {cargando && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[1,2,3,4].map((i) => (
-                  <div key={i} className="bg-white rounded-xl shadow-md overflow-hidden animate-pulse">
-                    <div className="w-full h-48 bg-gray-200" />
+                  <div key={i} className={`rounded-xl shadow-md overflow-hidden animate-pulse ${modoOscuro ? 'bg-gray-800' : 'bg-white'}`}>
+                    <div className="w-full h-48 bg-gray-600" />
                     <div className="p-4 space-y-3">
-                      <div className="h-3 bg-gray-200 rounded w-1/4" />
-                      <div className="h-5 bg-gray-200 rounded w-3/4" />
-                      <div className="h-3 bg-gray-200 rounded w-full" />
+                      <div className="h-3 bg-gray-600 rounded w-1/4" />
+                      <div className="h-5 bg-gray-600 rounded w-3/4" />
+                      <div className="h-3 bg-gray-600 rounded w-full" />
                     </div>
                   </div>
                 ))}
@@ -41,19 +53,27 @@ function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActi
               <p className="text-red-500 text-center py-12">{error}</p>
             )}
 
-            {/* Noticias */}
+            {/* Noticias con animación */}
             {!cargando && !error && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {noticias.map((noticia) => (
-                  <NewsCard
+                {noticias.map((noticia, index) => (
+                  <div
                     key={noticia.id}
-                    title={noticia.title}
-                    category={noticia.category}
-                    description={noticia.description}
-                    image={noticia.image}
-                    date={noticia.date}
-                    url={noticia.url}
-                  />
+                    style={{
+                      animation: visible ? `fadeUp 0.5s ease-out ${index * 0.1}s both` : 'none',
+                      opacity: visible ? 1 : 0
+                    }}
+                  >
+                    <NewsCard
+                      title={noticia.title}
+                      category={noticia.category}
+                      description={noticia.description}
+                      image={noticia.image}
+                      date={noticia.date}
+                      url={noticia.url}
+                      modoOscuro={modoOscuro}
+                    />
+                  </div>
                 ))}
               </div>
             )}
@@ -64,7 +84,7 @@ function HomePage({ noticias, cargando, error, categoriaActiva, setCategoriaActi
           </div>
 
           {/* Sidebar */}
-          <Sidebar />
+          <Sidebar onCategoriaChange={setCategoriaActiva} modoOscuro={modoOscuro} />
 
         </div>
       </main>

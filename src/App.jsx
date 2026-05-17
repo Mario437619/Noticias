@@ -11,6 +11,7 @@ function App() {
   const [noticias, setNoticias] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
+  const [modoOscuro, setModoOscuro] = useState(false)
 
   useEffect(() => {
     setCargando(true)
@@ -29,8 +30,12 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="bg-gray-100 min-h-screen">
-        <NavBar />
+      <div className={modoOscuro ? 'bg-gray-950 min-h-screen' : 'bg-gray-100 min-h-screen'}>
+        <NavBar
+          onCategoriaChange={setCategoriaActiva}
+          modoOscuro={modoOscuro}
+          toggleModo={() => setModoOscuro(!modoOscuro)}
+        />
 
         <Routes>
           <Route
@@ -42,13 +47,14 @@ function App() {
                 error={error}
                 categoriaActiva={categoriaActiva}
                 setCategoriaActiva={setCategoriaActiva}
+                modoOscuro={modoOscuro}
               />
             }
           />
-          <Route path="/article" element={<ArticlePage />} />
+          <Route path="/article" element={<ArticlePage modoOscuro={modoOscuro} />} />
         </Routes>
 
-        <Footer />
+        <Footer modoOscuro={modoOscuro} />
       </div>
     </BrowserRouter>
   )
